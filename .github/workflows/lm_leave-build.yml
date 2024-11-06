@@ -1,0 +1,17 @@
+name:  LM Leave Build and Push
+# Devlop
+on:
+  push:
+    branches:
+      - container/pentagon-live
+    paths: 
+      - lm_leave/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-app-live-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'lm_leave'
+      mfp-folder: 'leave'

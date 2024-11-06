@@ -1,0 +1,16 @@
+name: LM Admin Build and Push
+on:
+  push:
+    branches:
+      - container/pentagon-live
+    paths: 
+      - lm_admin/**
+
+# manager
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-app-live-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'lm_admin'
+      mfp-folder: 'admin'

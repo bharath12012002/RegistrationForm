@@ -1,0 +1,17 @@
+name: payroll Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/stages
+    paths: 
+      - payroll/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'payroll'
+      mfp-folder: 'payroll'

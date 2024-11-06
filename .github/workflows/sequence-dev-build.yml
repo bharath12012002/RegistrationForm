@@ -1,0 +1,17 @@
+name: Sequence Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - sequence/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'sequence'
+      mfp-folder: 'sequence'

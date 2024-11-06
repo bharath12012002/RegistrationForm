@@ -1,0 +1,17 @@
+name: Permission Build and Push
+# Devlop
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - hrm_config_permission/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'hrm_config_permission'
+      mfp-folder: 'hrm_config_permission'

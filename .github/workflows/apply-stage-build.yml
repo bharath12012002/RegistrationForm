@@ -1,0 +1,16 @@
+name: Apply Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths:
+      - Ot_Apply/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Ot_Apply"
+      mfp-folder: "overtime_apply"

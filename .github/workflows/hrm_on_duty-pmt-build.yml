@@ -1,0 +1,16 @@
+name: on duty Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - hrm_on_duty/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "hrm_on_duty"
+      mfp-folder: "hrm_on_duty"

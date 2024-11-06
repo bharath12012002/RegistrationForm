@@ -1,0 +1,17 @@
+name: Holiday Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths: 
+      - Holiday/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Holiday'
+      mfp-folder: 'holidayconfig'

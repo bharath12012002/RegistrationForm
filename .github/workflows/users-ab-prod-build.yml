@@ -1,0 +1,19 @@
+name: Users Build and Push
+
+on:
+  push:
+    branches:
+     - hrm/develop
+
+    paths: 
+      - users/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-ab-prod-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'users'
+      mfp-folder: 'users'
+                   

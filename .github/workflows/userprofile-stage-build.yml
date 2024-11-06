@@ -1,0 +1,17 @@
+name: Userprofile Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths: 
+      - Userprofile/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Userprofile'
+      mfp-folder: 'userprofile'

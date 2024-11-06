@@ -1,0 +1,17 @@
+name: Dashboard Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - Dashboard/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Dashboard'
+      mfp-folder: 'dashboard'

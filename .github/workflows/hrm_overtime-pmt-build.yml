@@ -1,0 +1,16 @@
+name: Overtime Build and Push
+# Devlop
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - hrm_config_ot_permission/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "hrm_config_ot_permission"
+      mfp-folder: "hrm_config_ot_permission"

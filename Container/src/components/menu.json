@@ -1,0 +1,70 @@
+{
+    "main_menus": [
+        {
+            "title": "Home",
+            "icon": "HomeRoundedIcon",
+            "link": "/home",
+            "sub_menus": [
+               
+            ]
+        },
+        {
+            "title": "Dashboard",
+            "icon": "DashboardRoundedIcon",
+            "link": "/exdashboard",
+            "sub_menus": [
+              
+            ]
+        },
+        {
+            "title": "Inventory",
+            "icon": "Inventory2RoundedIcon",
+            "link": "/inventory",
+            "sub_menus": [
+                {
+                    "title": "Manage Inventory",
+                    "icon": "QrCodeScannerOutlinedIcon",
+                    "link": "/inventory"
+                },
+                {
+                    "title": "Month-In Stock",
+                    "icon": "TodayOutlinedIcon",
+                    "link": "/inventory/mo-stock"
+                }
+            ]
+        },
+        {
+            "title": "GRN",
+            "icon": "AssignmentTurnedInRoundedIcon",
+            "link": "/grn",
+            "sub_menus": [
+                {
+                    "title": "Generate GRN",
+                    "icon": "PersonAddOutlinedIcon",
+                    "link": "/grn/new-grn"
+                },
+                {
+                    "title": "GRN List",
+                    "icon": "PlaylistAddCheckOutlinedIcon",
+                    "link": "/grn"
+                }
+            ]
+        },
+        {
+            "title": "Warehouse",
+            "icon": "CottageRoundedIcon",
+            "link": "/warehouse",
+            "sub_menus": [
+               
+            ]
+        },
+        {
+            "title": "SKU Locator",
+            "icon": "LocationOnRoundedIcon",
+            "link": "/skulocator",
+            "sub_menus": [
+               
+            ]
+        }
+    ]
+}

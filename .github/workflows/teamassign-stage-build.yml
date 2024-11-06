@@ -1,0 +1,18 @@
+name: Teamassign Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths: 
+      - teamassign/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'teamassign'
+      mfp-folder: 'teamassign'
+                   

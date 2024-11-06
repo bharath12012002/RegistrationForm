@@ -1,0 +1,16 @@
+name: Dashboard Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/stages
+    paths:
+      - Dashboard/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Dashboard"
+      mfp-folder: "dashboard"

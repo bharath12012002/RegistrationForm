@@ -1,0 +1,17 @@
+name: Dashboardreport Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/develop
+    paths: 
+      - hrdash/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-ab-prod-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'hrdash'
+      mfp-folder: 'dashboardreport'

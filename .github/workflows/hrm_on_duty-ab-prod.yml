@@ -1,0 +1,17 @@
+name: HRM On Duty Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/develop
+    paths: 
+      - hrm_on_duty/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-ab-prod-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'hrm_on_duty'
+      mfp-folder: 'hrm_on_duty'

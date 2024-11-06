@@ -1,0 +1,17 @@
+name: Payroll_report Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - Payroll_report/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Payroll_report'
+      mfp-folder: 'payrollreport'

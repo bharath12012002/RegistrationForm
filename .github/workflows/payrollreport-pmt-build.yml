@@ -1,0 +1,16 @@
+name: Payroll_report Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - Payroll_report/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Payroll_report"
+      mfp-folder: "payrollreport"

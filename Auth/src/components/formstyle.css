@@ -1,0 +1,8 @@
+.section {
+  background-image: url("./images/dimclr.gif");
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}

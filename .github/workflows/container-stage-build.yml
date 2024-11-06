@@ -1,0 +1,21 @@
+
+# .github/workflows/publish.yml
+name: Container Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/stages
+    paths: 
+      - Container/**
+
+env:
+  IPSS_FE_PRODUCTION_DOMAIN: "https://pmt.techgenzi.com/mfp"
+  
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-container-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Container'
+      mfp-folder: 'NA'

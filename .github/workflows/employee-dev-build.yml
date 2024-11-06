@@ -1,0 +1,17 @@
+name: Employee Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - Employee/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Employee'
+      mfp-folder: 'employee'

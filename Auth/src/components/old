@@ -1,0 +1,389 @@
+import React, { useEffect, useState } from 'react';
+//import Avatar from '@material-ui/core/Avatar';
+import { Button } from '@mui/material'
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+//import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import { login, getAllUsers } from '../service/User.service';
+import './formstyle.css';
+import Grid from "@mui/material/Grid";
+import { Height, Maximize } from '@material-ui/icons';
+import {
+  useFormik
+} from 'formik'
+import * as yup from 'yup'
+import { Divider } from '@material-ui/core';
+import { loginUser } from '../service/User.service';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { getApi } from '../service/User.service';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
+import Chip from '@mui/material/Chip';
+import { Paper } from '@mui/material'
+import { Avatar } from '@mui/material'
+// const useStyles = useTheme((theme) => ({
+//   '@global': {
+//     a: {
+//       textDecoration: 'none',
+//     },
+//   },
+//   paper: {
+//     marginTop: theme.spacing(7),
+//     display: 'flex',
+//     flexDirection: 'column',
+//     alignItems: 'center',
+//   },
+//   avatar: {
+//     margin: theme.spacing(1),
+//     backgroundColor: theme.palette.secondary.main,
+//   },
+//   form: {
+//     width: '100%',
+//     marginTop: theme.spacing(1),
+//   },
+//   submit: {
+//     margin: theme.spacing(3, 0, 2),
+//   },
+//   inform: {
+//     margin: '2px 0px',
+//   },
+//   con: {
+//     padding: '40px 15px',
+//     justifyContent: 'right',
+//     width: '806px',
+//     height: '912px',
+//   },
+// }));
+
+
+export default function SignIn({ onSignIn }) {
+  const api = getApi();
+  const history = useHistory();
+  //const classes = useStyles();
+  const [submiting, setSubmit] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [error_msg, setErrormsg] = useState('');
+
+  // redirect //vijayd
+  useEffect(() => {
+    document.title = "Sign In | AAA-IPSS "
+    console.log("working")
+    if (localStorage.getItem('access_token')) {
+      history.push('/home')
+    }
+  }, [])
+
+  const [show, showPassword] = useState(false)
+  const handleClickShowPassword = () => {
+    showPassword(!show)
+  }
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const onSignInSub = (values, { setErrors }) => {
+    setSubmit(true)
+    console.log(values);
+    let data = {
+      "username": values.email,
+      "password": values.password,
+    }
+    // CALL API HERE
+    api.post("/users/login", data)
+      .then(res => {
+        setSubmit(false)
+        console.log('login response')
+        console.log('res', res)
+        // localStorage.setItem("role", res.data.role);
+        // console.log(localStorage.getItem('role'))
+        { /* if(res.data.success === true){
+  console.log('password required')
+  localStorage.setItem("access_token", res.data.access_token);
+  localStorage.setItem("email", res.data.user.email);
+  localStorage.setItem("role", res.data.role);
+  if(onSignIn){
+    onSignIn({
+      access_token: res.data.access_token,
+    });
+  } else {
+    console.log('in dev mode');
+  }
+  onSignIn(res.data) 
+  history.push('/panelresetpassword')
+
+} */}
+
+        //  localStorage.setItem("role", res.data.role);
+        // history.push('/dashboard?loggedIn=true')
+        if (res.data.success) {
+          localStorage.setItem("access_token", res.data.access_token);
+          sessionStorage.setItem("access_token", res.data.access_token);
+          // localStorage.setItem("email", res.data.user.email);
+          // localStorage.setItem("role", res.data.role);
+          // console.log(localStorage.getItem('role'))
+          //  setSuccess(true)
+          if (onSignIn) {
+            onSignIn({
+              access_token: res.data.access_token,
+            });
+          } else {
+            console.log('in dev mode');
+          }
+        }
+        else {
+          console.log(res)
+        }
+        setTimeout(() => {
+          setSuccess(false)
+        }, 3000);
+
+        onSignIn(res.data)
+        //  console.log(res.data.user.reset_password)
+      })
+      .catch(err => {
+        setSubmit(false)
+        console.log('errorrrrr')
+        console.log(err)
+        // console.log(err.response.data.msg)
+        setError(true)
+        // setErrormsg(err.response.data.msg)
+        setTimeout(() => {
+          setError(false)
+          //  setErrormsg('User with given username is already exists.')
+        }, 3000);
+
+      })
+  }
+
+
+  const registerFormSchema = yup.object({
+    email: yup.string().email("Enter valid Email ID").required("Email ID is required."),
+    password: yup.string().required("Password is required"),
+  })
+  const initialValues = {
+    email: "",
+    password: "",
+  }
+  const formik = useFormik({
+    validationSchema: registerFormSchema,
+    validateOnChange: false,
+    validationOnBlur: true,
+    onSubmit: onSignInSub,
+    initialValues,
+  })
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    values
+  } = formik
+
+  useEffect(() => {
+    console.log(errors);
+  }, [formik]);
+
+  return (
+    <div style={{ backgroundColor: ' #e8f2ff', height: '600px', width: '1400px', boxShadow: '0px 2px 2px 3px #ffffff', borderRadius: '30px'   }}>
+      {/* #9194a3 */}
+      <br />
+      <br />
+      <br />
+     
+
+
+      {/* <Grid container rowspacing={1} columnspacing={{ xs: 1, sm: 2, md: 3 }}  >
+
+
+
+        <Grid item xs={6} > */}
+
+          <Container style={{ marginLeft: '524px' , alignContent: 'center'}}>
+
+
+
+
+
+            <Paper elevation={10} style={{ height: '500px', width: '300px', boxShadow: '0px 2px 2px 3px #ffffff', borderRadius: '30px' }}  >
+
+              <form
+                onSubmit={handleSubmit}
+                style={{ marginLeft: '40px', marginRight: '40px', alignContent: 'center' }}
+                noValidate
+              >
+
+                <br />
+                <br />
+
+                <Grid item xs={12} justifyContent="center" >
+                  <Avatar style={{ marginLeft: '85px', backgroundColor: '#a50575' }}>
+                    <LockOpenRoundedIcon />
+                  </Avatar>
+
+                  <Typography style={{ color: '#00308f', fontWeight: 'bold', marginLeft: '78px' }}>
+
+                    Sign In
+                  </Typography>
+                  <br />
+                </Grid>
+
+                {/* <Chip style={{color: '#00308f', width: '40px', height: '40px', alignContent: 'center', justifyContent: 'center'}}  avatar={<LockOpenRoundedIcon></LockOpenRoundedIcon>}> 
+          
+                </Chip> */}
+                {error &&
+                  <Alert style={{ marginBottom: 15 }} severity="error">{error_msg}</Alert>
+                }
+                {success &&
+                  <Alert severity="success">Successfully Signed In!</Alert>
+                }
+                <Grid container spacing={2}>
+                  <Grid item xs={12} justifyContent="center">
+
+                    <TextField
+                      style={{ color: '#00308f' }}
+                      variant='outlined'
+                      type="email"
+                      name="email"
+                      label="Email ID"
+                      margin="normal"
+                      fullWidth
+                      onChange={handleChange}
+                      //onBlur={handleBlur}
+                      value={values.email}
+                      error={errors.email}
+                      helperText={errors.email ? errors.email : ''}
+
+                    />
+                  </Grid>
+                  <Grid xs={12} item justifyContent="center">
+                    <TextField
+                      style={{ color: '#00308f' }}
+                      InputProps={{
+                        endAdornment:
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {show ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+
+                      }}
+                      variant='outlined'
+                      type={show ? 'text' : 'password'}
+                      name="password"
+                      label="Password"
+                      margin="normal"
+                      fullWidth
+                      onChange={handleChange}
+                      // onBlur={handleBlur}
+                      value={values.password}
+                      error={errors.password}
+                      helperText={errors.password ? errors.password : ''}
+
+                    />
+
+                  </Grid>
+                </Grid>
+                <br /><br />
+                <Grid container justifyContent="center">
+                  <Button type="submit"
+                    style={{
+                      width: '80px',
+                      height: '40px',
+                      color: '#fff',
+                      backgroundColor: '#00308f'
+                    }}
+                    // style={{color: '#00308f'}}
+                    size="medium"
+                    variant="contained"
+                  //color="primary"
+                  // disabled={isSubmitting}
+                  >
+                    {submiting ? <CircularProgress style={{ color: "#fff", textTransform: "capitalize" }} size={20} color='secondary' /> : 'Sign In'}
+
+                  </Button>
+                </Grid>
+
+              </form>
+            </Paper>
+
+            <br /><br /><br />
+            {/*  <Link style={{marginBottom:15,marginTop:15}} to='/auth/signup'> Don't have an account? <b>Sign Up</b> </Link>
+              <br /><br /> */}
+            {/*<div className={classes.inform}>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form
+              onSubmit={handleSubmit}
+              className={classes.form}
+              noValidate
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Keep me logged in"
+
+              />
+              <Typography>Forgot Password?</Typography>
+              <div>
+                <Grid container justifyContent="center">
+                  <Button
+                    type="submit"
+                    size="medium"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign In
+                  </Button>
+                </Grid>
+              </div>
+            </form>
+           </div>*/}
+
+          </Container>
+          {/* <Grid id='small_device' item xs={12}>
+            {/* <img style={{ width:'100%' }} className={classes.img} src="/public/img/image.png" /> */}
+
+          {/* </Grid>
+        </Grid> 
+
+      </Grid> */}
+      <br /> <br /> <br />
+    </div>
+  );
+}

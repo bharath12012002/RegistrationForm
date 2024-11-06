@@ -1,0 +1,51 @@
+name: React Js HRM Performance Testing build
+
+on:
+  workflow_call:
+    inputs:
+      react-folder:
+        required: true
+        type: string
+      mfp-folder:
+        required: true
+        type: string
+env:
+  IPSS_FE_PRODUCTION_DOMAIN: "https://pmt.techgenzi.com/mfp"
+
+jobs:
+  react_build:
+    name: React Js Folder Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ${{ format('{0}/node_modules', inputs.react-folder) }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Yarn Install
+        working-directory: ${{ inputs.react-folder }}
+        run: |
+          npm i --legacy-peer-deps
+      - name: Production Build
+        working-directory: ${{ inputs.react-folder }}
+        run: |
+          npm run build
+          cp -r dist build
+          cp -r public build/public
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks
+        env:
+          AWS_S3_BUCKET: ${{ secrets.PMT_PROD_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.PMT_PROD_AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PMT_PROD_SECRET_KEY }}
+          AWS_REGION: ${{ secrets.PMT_PROD_AWS_REGION }}
+          AWS_S3_ENDPOINT: ${{ secrets.PMT_PROD_S3_ENDPOINT }}
+          SOURCE_DIR: ${{ format('{0}/build', inputs.react-folder) }}

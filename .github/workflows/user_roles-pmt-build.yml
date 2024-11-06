@@ -1,0 +1,16 @@
+name: Userroles Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - user_roles/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "user_roles"
+      mfp-folder: "user_roles"

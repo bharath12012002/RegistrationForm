@@ -1,0 +1,17 @@
+name: Holiday Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - Holiday/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Holiday'
+      mfp-folder: 'holidayconfig'

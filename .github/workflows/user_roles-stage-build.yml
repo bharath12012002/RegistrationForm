@@ -1,0 +1,17 @@
+name: Userroles Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths: 
+      - user_roles/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'user_roles'
+      mfp-folder: 'user_roles'

@@ -1,0 +1,17 @@
+name: Report Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths: 
+      - Report/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Report'
+      mfp-folder: 'report'

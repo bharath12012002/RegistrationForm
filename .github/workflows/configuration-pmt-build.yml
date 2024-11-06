@@ -1,0 +1,16 @@
+name: Configuration Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - Configuration/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Configuration"
+      mfp-folder: "configuration"

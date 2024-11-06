@@ -1,0 +1,17 @@
+name: Attendance Configuration Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - Ot_Config/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Ot_Config'
+      mfp-folder: 'attendance_configuration'

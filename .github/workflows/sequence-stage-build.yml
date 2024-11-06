@@ -1,0 +1,16 @@
+name: Sequence Build and Push
+
+on:
+  push:
+    branches:
+      - hrm-staging
+    paths:
+      - sequence/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: "sequence"
+      mfp-folder: "sequence"

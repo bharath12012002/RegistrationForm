@@ -1,0 +1,16 @@
+name: Userprofile Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - Userprofile/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Userprofile"
+      mfp-folder: "userprofile"

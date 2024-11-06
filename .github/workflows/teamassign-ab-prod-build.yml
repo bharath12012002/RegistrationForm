@@ -1,0 +1,18 @@
+name: Teamassign Build and Push
+
+on:
+  push:
+    branches:
+     - hrm/develop
+    paths: 
+      - teamassign/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-ab-prod-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'teamassign'
+      mfp-folder: 'teamassign'
+                   

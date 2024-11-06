@@ -1,0 +1,16 @@
+name: on duty Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/stages
+    paths:
+      - hrm_on_duty/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: "hrm_on_duty"
+      mfp-folder: "hrm_on_duty"

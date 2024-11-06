@@ -1,0 +1,16 @@
+name: Supportticket Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - Supportticket/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Supportticket"
+      mfp-folder: "supportticket"

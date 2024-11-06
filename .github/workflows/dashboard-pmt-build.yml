@@ -1,0 +1,16 @@
+name: Dashboard Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/pmt-build
+    paths:
+      - Dashboard/**
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-pmt-build.yml
+    secrets: inherit
+    with:
+      react-folder: "Dashboard"
+      mfp-folder: "dashboard"

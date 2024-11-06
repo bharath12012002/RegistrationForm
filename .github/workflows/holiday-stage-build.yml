@@ -1,0 +1,17 @@
+name: Holiday Build and Push
+
+on:
+  push:
+    branches:
+      - hrm/stages
+    paths: 
+      - Holiday/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-stage-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'Holiday'
+      mfp-folder: 'holidayconfig'

@@ -1,0 +1,25 @@
+{
+    "success": true,
+    "message": "string",
+    "access_token": "string",
+    "user": {
+      "username": "string",
+      "firstname": "string",
+      "usersign": "string",
+      "firstlogin": "string",
+      "createdon": "string",
+      "eviewtype": "string",
+      "userip": "string",
+      "userid": 0,
+      "userphoto": "string",
+      "emailid": "string",
+      "lastname": "string",
+      "projectid": 0,
+      "usertype": "string",
+      "rolename": "string",
+      "countrycode": "string",
+      "enabled": "string",
+      "auvitid": "string",
+      "mobilenumber": "string"
+    }
+  }

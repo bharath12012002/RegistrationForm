@@ -1,0 +1,17 @@
+name: Shift Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+    paths: 
+      - hrm_shift_config/**
+
+
+jobs:
+  container_build:
+    uses: ./.github/workflows/react-dev-build.yml
+    secrets: inherit
+    with:
+      react-folder: 'hrm_shift_config'
+      mfp-folder: 'hrm_shift_config'
